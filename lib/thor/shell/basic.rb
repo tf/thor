@@ -170,7 +170,8 @@ class Thor
       #
       def file_collision(destination)
         return true if @always_force
-        options = block_given? ? "[Ynaqdh]" : "[Ynaqh]"
+        return false if @always_skip
+        options = block_given? ? "[Ynakqdh]" : "[Ynakqh]"
 
         while true
           answer = ask %[Overwrite #{destination}? (enter "h" for help) #{options}]
@@ -182,6 +183,8 @@ class Thor
               return false
             when is?(:always)
               return @always_force = true
+            when is?(:keep)
+              return @always_skip = true
             when is?(:quit)
               say 'Aborting...'
               raise SystemExit
@@ -239,6 +242,7 @@ class Thor
 Y - yes, overwrite
 n - no, do not overwrite
 a - all, overwrite this and all others
+k - keep, do not overwrite any files
 q - quit, abort
 d - diff, show the differences between the old and the new
 h - help, show this help
