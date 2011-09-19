@@ -44,7 +44,7 @@ class Thor
       # Boolean:: true if it is identical, false otherwise.
       #
       def identical?
-        exists? && File.binread(destination) == render
+        exists? && File.read(destination) == render
       end
 
       # Holds the content to be added to the file.
